@@ -1,5 +1,7 @@
 package com.example.projetospringjava.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -15,7 +17,9 @@ public class Category implements Serializable {
     private Long id;
     private String nome;
 
-    @Transient
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "categories")
     private Set<Product> product = new HashSet<>();
 
     public Category(Long id, String nome) {

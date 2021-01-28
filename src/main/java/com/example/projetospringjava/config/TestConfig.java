@@ -34,6 +34,7 @@ public class TestConfig implements CommandLineRunner {
     private ProductRepository productRepository;
 
 
+
     @Override
     public void run(String... args) throws Exception {
         User u1 = new User(null,"Maria Brown","Maria@gmail.com","988888888","123456");
@@ -58,6 +59,16 @@ public class TestConfig implements CommandLineRunner {
         userRepository.saveAll(Arrays.asList(u1,u2));
         orderRepository.saveAll(Arrays.asList(o1,o2,o3));
         categoryRepository.saveAll(Arrays.asList(cat1,cat2,cat3));
+        productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
+
+        p1.getCategories().add(cat2);
+        p2.getCategories().add(cat1);
+        p3.getCategories().add(cat3);
+        p3.getCategories().add(cat1);
+        p4.getCategories().add(cat3);
+        p4.getCategories().add(cat1);
+        p5.getCategories().add(cat2);
+
         productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
 
     }
