@@ -1,5 +1,6 @@
 package com.example.projetospringjava.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.persistence.*;
@@ -20,6 +21,7 @@ public class User implements Serializable {
     private String phone;
     private String password;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "cliente")
     private List<Order> orders = new ArrayList<>();
 
