@@ -1,5 +1,6 @@
 package com.example.projetospringjava.entities;
 
+import com.example.projetospringjava.entities.enus.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -24,14 +25,17 @@ public class Order implements Serializable {
     @JoinColumn(name = "cliente_id")
     private User cliente;
 
+    private Integer orderStatus;
 
     public Order() {
+
     }
 
-    public Order(Long id, Instant moment, User cliente) {
+    public Order(Long id, Instant moment, OrderStatus orderStatus, User cliente) {
         this.id = id;
         this.moment = moment;
         this.cliente = cliente;
+        setOrderStatus(orderStatus);
     }
 
     public Long getId() {
@@ -56,6 +60,16 @@ public class Order implements Serializable {
 
     public void setCliente(User cliente) {
         this.cliente = cliente;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return OrderStatus.valueOF(orderStatus);
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        if(orderStatus != null) {
+            this.orderStatus = orderStatus.getCode();
+        }
     }
 
     @Override
