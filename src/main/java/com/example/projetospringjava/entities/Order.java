@@ -41,6 +41,9 @@ public class Order implements Serializable {
         this.cliente = cliente;
         setOrderStatus(orderStatus);
     }
+                                  //mapeando a entidade para ter o mesmo id
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    private Payment payment;
 
     public Long getId() {
         return id;
@@ -76,10 +79,18 @@ public class Order implements Serializable {
         }
     }
 
+
     public Set<OrderItem> getItems() {
         return items;
     }
 
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
+    }
 
     @Override
     public boolean equals(Object o) {
