@@ -2,7 +2,6 @@ package com.example.projetospringjava.entities;
 
 import com.example.projetospringjava.entities.enus.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -27,7 +26,12 @@ public class Order implements Serializable {
     @JoinColumn(name = "cliente_id")
     private User cliente;
 
+    //mapeando a entidade para ter o mesmo id
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    private Payment payment;
+
     private Integer orderStatus;
+
 
     @OneToMany(mappedBy = "id.order")
     private Set<OrderItem> items = new HashSet<>();
@@ -35,15 +39,15 @@ public class Order implements Serializable {
     public Order() {
     }
 
+
     public Order(Long id, Instant moment, OrderStatus orderStatus, User cliente) {
         this.id = id;
         this.moment = moment;
         this.cliente = cliente;
         setOrderStatus(orderStatus);
     }
-                                  //mapeando a entidade para ter o mesmo id
-    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
-    private Payment payment;
+
+
 
     public Long getId() {
         return id;
@@ -69,6 +73,14 @@ public class Order implements Serializable {
         this.cliente = cliente;
     }
 
+    public  Double getTotal(){
+        double total=0;
+        for(OrderItem itens : items){
+            total+=itens.getSubTotal();
+        }
+        return total;
+    }
+
     public OrderStatus getOrderStatus() {
         return OrderStatus.valueOF(orderStatus);
     }
@@ -91,6 +103,8 @@ public class Order implements Serializable {
     public void setPayment(Payment payment) {
         this.payment = payment;
     }
+
+
 
     @Override
     public boolean equals(Object o) {
