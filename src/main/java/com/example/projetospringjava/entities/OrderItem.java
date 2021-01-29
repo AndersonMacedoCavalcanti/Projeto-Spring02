@@ -1,6 +1,8 @@
 package com.example.projetospringjava.entities;
 
 import com.example.projetospringjava.entities.pk.OrderItemPK;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,7 +13,8 @@ import java.util.Objects;
 public class OrderItem implements Serializable {
 
     @EmbeddedId
-    private OrderItemPK id;
+    private OrderItemPK id = new OrderItemPK();
+
     private Integer quantity;
     private Double price;
 
@@ -47,6 +50,7 @@ public class OrderItem implements Serializable {
         return id.getOrder();
     }
 
+    @JsonIgnore
     public void setOrder(Order order){
         id.setOrder(order);
     }
